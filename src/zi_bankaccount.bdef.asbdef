@@ -1,14 +1,46 @@
 managed implementation in class zbp_i_bankaccount unique;
 strict(2);
+with draft;
 
 define behavior for ZI_BANKACCOUNT alias Account
 persistent table zbank_acct
-lock master
+draft table zbank_acct_d
+etag master local_last_changed_at
+lock master total etag last_changed_at
 authorization master ( global )
 {
   field ( readonly ) account_id;
+  field ( readonly ) created_by, created_at, last_changed_by, last_changed_at, local_last_changed_at;
 
   create;
   update;
   delete;
+
+  association _Transaction { create; with draft; }
+
+  action deposit parameter ZI_BANKACCOUNT_DEPOSIT result [1] $self;
+  action withdraw parameter ZI_BANKACCOUNT_WITHDRAW result [1] $self;
+  action closeAccount result [1] $self;
+
+  draft action Edit;
+  draft action Activate optimized;
+  draft action Discard;
+  draft action Resume;
+  draft determine action Prepare;
+}
+
+define behavior for ZI_BANKTRANSACTION alias Transaction
+persistent table zbank_txn
+draft table zbank_txn_d
+lock dependent by _Account
+authorization dependent by _Account
+{
+  field ( readonly ) transaction_id;
+  field ( readonly ) account_id;
+  field ( readonly ) created_by, created_at, last_changed_by, last_changed_at, local_last_changed_at;
+
+  update;
+  delete;
+
+  association _Account {with draft; }
 }

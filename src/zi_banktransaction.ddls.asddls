@@ -1,8 +1,8 @@
 @AccessControl.authorizationCheck: #NOT_REQUIRED
 @EndUserText.label: 'Bank Transaction'
-define view entity ZI_BANKTRANSACTION as select from zbank_txn
+define  view entity ZI_BANKTRANSACTION as select from zbank_txn
 
-  association [1..1] to ZI_BANKACCOUNT as _Account on $projection.account_id = _Account.account_id
+  association to parent ZI_BANKACCOUNT as _Account on $projection.account_id = _Account.account_id
 
 {
   key transaction_id,

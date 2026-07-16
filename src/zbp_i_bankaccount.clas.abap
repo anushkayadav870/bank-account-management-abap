@@ -1,14 +1,5 @@
-class ZBP_I_BANKACCOUNT definition
-  public
-  final
-  create public .
-
-public section.
-protected section.
-private section.
+CLASS zbp_i_bankaccount DEFINITION PUBLIC ABSTRACT FINAL FOR BEHAVIOR OF zi_bankaccount.
 ENDCLASS.
 
-
-
-CLASS ZBP_I_BANKACCOUNT IMPLEMENTATION.
+CLASS zbp_i_bankaccount IMPLEMENTATION.
 ENDCLASS.
