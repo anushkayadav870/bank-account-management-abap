@@ -1,6 +1,6 @@
 @AccessControl.authorizationCheck: #NOT_REQUIRED
 @EndUserText.label: 'Bank Account'
-define view entity ZI_BANKACCOUNT as select from zbank_acct
+define root view entity ZI_BANKACCOUNT as select from zbank_acct
 
   association [0..1] to ZI_BANKCUST     as _Customer   on $projection.customer_id = _Customer.customer_id
   association [0..1] to ZI_BANKACCTTYPE as _AcctType   on $projection.account_type = _AcctType.account_type
