@@ -1,0 +1,5 @@
+@EndUserText.label: 'Bank Account Management Service'
+define service ZUI_BANK_ACCT_MGMT {
+  expose ZC_BANKACCOUNT     as Account;
+  expose ZC_BANKTRANSACTION as Transaction;
+}

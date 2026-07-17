@@ -1,0 +1,82 @@
+@Metadata.layer: #CORE
+
+annotate entity ZC_BANKACCOUNT with
+{
+  @UI.facet: [
+    {
+      id: 'AccountDetails',
+      purpose: #STANDARD,
+      type: #IDENTIFICATION_REFERENCE,
+      label: 'Account Details',
+      position: 10
+    },
+    {
+      id: 'Transactions',
+      purpose: #STANDARD,
+      type: #LINEITEM_REFERENCE,
+      label: 'Transactions',
+      position: 20,
+      targetElement: '_Transaction'
+    }
+  ]
+
+  @UI: {
+    lineItem:       [ { position: 10, importance: #HIGH } ],
+    identification: [ { position: 10 } ],
+    selectionField: [ { position: 10 } ]
+  }
+  account_id;
+
+  @UI: {
+    lineItem:       [ { position: 20, importance: #HIGH } ],
+    identification: [ { position: 20 } ]
+  }
+  customer_id;
+
+  @UI: {
+    lineItem:       [ { position: 30, importance: #HIGH } ],
+    identification: [ { position: 30 } ],
+    selectionField: [ { position: 20 } ]
+  }
+  account_type;
+
+  @UI: {
+    lineItem:       [ { position: 40, importance: #MEDIUM } ],
+    identification: [ { position: 40 } ]
+  }
+  branch_id;
+
+  @UI: {
+    lineItem:       [ { position: 50, importance: #HIGH } ],
+    identification: [ { position: 50 } ]
+  }
+  balance;
+
+  @UI: {
+    lineItem:       [ { position: 60, importance: #HIGH } ],
+    identification: [ { position: 60 } ],
+    selectionField: [ { position: 30 } ]
+  }
+  status;
+
+  @UI: {
+    lineItem:       [ { position: 70, importance: #MEDIUM } ],
+    identification: [ { position: 70 } ]
+  }
+  open_date;
+
+  @UI.hidden: true
+  created_by;
+
+  @UI.hidden: true
+  created_at;
+
+  @UI.hidden: true
+  last_changed_by;
+
+  @UI.hidden: true
+  last_changed_at;
+
+  @UI.hidden: true
+  local_last_changed_at;
+}

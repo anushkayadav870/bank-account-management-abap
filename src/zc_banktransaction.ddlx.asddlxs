@@ -1,0 +1,30 @@
+@Metadata.layer: #CORE
+
+annotate entity ZC_BANKTRANSACTION with
+{
+  @UI.lineItem: [ { position: 10, importance: #HIGH } ]
+  transaction_id;
+
+  @UI.lineItem: [ { position: 20, importance: #HIGH } ]
+  txn_type;
+
+  @UI.lineItem: [ { position: 30, importance: #HIGH } ]
+  amount;
+
+  @UI.lineItem: [ { position: 40, importance: #MEDIUM } ]
+  txn_date;
+
+  @UI.lineItem: [ { position: 50, importance: #MEDIUM } ]
+  txn_time;
+
+  @UI.hidden: true
+  created_by;
+  @UI.hidden: true
+  created_at;
+  @UI.hidden: true
+  last_changed_by;
+  @UI.hidden: true
+  last_changed_at;
+  @UI.hidden: true
+  local_last_changed_at;
+}

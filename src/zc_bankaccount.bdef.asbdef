@@ -1,0 +1,31 @@
+projection;
+strict(2);
+
+use draft;
+
+define behavior for ZC_BANKACCOUNT alias Account
+{
+  use create;
+  use update;
+  use delete;
+
+  use action deposit;
+  use action withdraw;
+  use action closeAccount;
+
+  use association _Transaction { create; }
+
+  use action Edit;
+  use action Activate;
+  use action Discard;
+  use action Resume;
+  use action Prepare;
+}
+
+define behavior for ZC_BANKTRANSACTION alias Transaction
+{
+  use update;
+  use delete;
+
+  use association _Account;
+}
