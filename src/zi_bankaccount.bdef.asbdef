@@ -9,7 +9,8 @@ etag master local_last_changed_at
 lock master total etag last_changed_at
 authorization master ( global )
 {
-  field ( readonly ) account_id;
+  field ( readonly : update ) account_id;
+  field ( readonly ) balance, status, open_date;
   field ( readonly ) created_by, created_at, last_changed_by, last_changed_at, local_last_changed_at;
 
   create;
@@ -22,11 +23,21 @@ authorization master ( global )
   action withdraw parameter ZI_BANKACCOUNT_WITHDRAW result [1] $self;
   action closeAccount result [1] $self;
 
+  determination setAccountDefaults on modify { create; }
+
+  validation checkActiveBranch on save { field branch_id; }
+  validation checkMinBalance on save { field balance; }
+
   draft action Edit;
   draft action Activate optimized;
   draft action Discard;
   draft action Resume;
-  draft determine action Prepare;
+  draft determine action Prepare
+  {
+    validation checkActiveBranch;
+    validation checkMinBalance;
+    validation Transaction~checkPositiveAmount;
+  }
 }
 
 define behavior for ZI_BANKTRANSACTION alias Transaction
@@ -42,5 +53,8 @@ authorization dependent by _Account
   update;
   delete;
 
-  association _Account {with draft; }
+  determination recalcBalance on modify { create; }
+  validation checkPositiveAmount on save { field amount; }
+
+  association _Account { with draft; }
 }
