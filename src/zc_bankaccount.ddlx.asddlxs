@@ -27,12 +27,14 @@ annotate entity ZC_BANKACCOUNT with
   }
   account_id;
 
+  @Consumption.valueHelpDefinition: [{ entity: { name: 'ZI_BANKCUST', element: 'customer_id' } }]
   @UI: {
     lineItem:       [ { position: 20, importance: #HIGH } ],
     identification: [ { position: 20 } ]
   }
   customer_id;
 
+  @Consumption.valueHelpDefinition: [{ entity: { name: 'ZI_BANKACCTTYPE', element: 'account_type' } }]
   @UI: {
     lineItem:       [ { position: 30, importance: #HIGH } ],
     identification: [ { position: 30 } ],
@@ -40,6 +42,7 @@ annotate entity ZC_BANKACCOUNT with
   }
   account_type;
 
+  @Consumption.valueHelpDefinition: [{ entity: { name: 'ZI_BANKBRANCH', element: 'branch_id' } }]
   @UI: {
     lineItem:       [ { position: 40, importance: #MEDIUM } ],
     identification: [ { position: 40 } ]
