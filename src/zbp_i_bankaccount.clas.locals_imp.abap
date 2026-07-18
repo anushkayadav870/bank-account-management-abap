@@ -175,16 +175,34 @@ CLASS lhc_Account IMPLEMENTATION.
   ENDMETHOD.
 
   METHOD closeAccount.
+    READ ENTITIES OF ZI_BANKACCOUNT IN LOCAL MODE
+      ENTITY Account
+      FIELDS ( balance )
+      WITH CORRESPONDING #( keys )
+      RESULT DATA(accounts).
+
     DATA update_tab TYPE TABLE FOR UPDATE ZI_BANKACCOUNT.
 
     LOOP AT keys INTO DATA(key).
-      APPEND VALUE #( %tky = key-%tky status = 'C' ) TO update_tab.
+      READ TABLE accounts INTO DATA(account) WITH KEY %tky = key-%tky.
+      IF sy-subrc = 0 AND account-balance <> 0.
+        APPEND VALUE #( %tky = key-%tky ) TO failed-account.
+        APPEND VALUE #( %tky = key-%tky
+                         %msg = new_message_with_text(
+                                  severity = if_abap_behv_message=>severity-error
+                                  text     = 'Account balance must be zero before closing' )
+        ) TO reported-account.
+      ELSE.
+        APPEND VALUE #( %tky = key-%tky status = 'C' ) TO update_tab.
+      ENDIF.
     ENDLOOP.
 
-    MODIFY ENTITIES OF ZI_BANKACCOUNT IN LOCAL MODE
-      ENTITY Account
-      UPDATE FIELDS ( status )
-      WITH update_tab.
+    IF update_tab IS NOT INITIAL.
+      MODIFY ENTITIES OF ZI_BANKACCOUNT IN LOCAL MODE
+        ENTITY Account
+        UPDATE FIELDS ( status )
+        WITH update_tab.
+    ENDIF.
 
     READ ENTITIES OF ZI_BANKACCOUNT IN LOCAL MODE
       ENTITY Account
