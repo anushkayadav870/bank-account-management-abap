@@ -1,0 +1,4 @@
+@EndUserText.label: 'Account Statement Report Service'
+define service ZUI_ACCT_STATEMENT {
+  expose ZC_ACCOUNTSTATEMENT as AccountStatement;
+}

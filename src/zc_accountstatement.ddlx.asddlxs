@@ -1,0 +1,52 @@
+@Metadata.layer: #CORE
+
+annotate entity ZC_ACCOUNTSTATEMENT with
+{
+  @UI: {
+    lineItem:       [ { position: 10, importance: #HIGH } ],
+    selectionField: [ { position: 10 } ]
+  }
+  transaction_id;
+
+  @UI: {
+    lineItem:       [ { position: 20, importance: #HIGH } ],
+    selectionField: [ { position: 20 } ]
+  }
+  account_id;
+
+  @UI: {
+    lineItem:       [ { position: 30, importance: #HIGH } ],
+    selectionField: [ { position: 30 } ]
+  }
+  customer_id;
+
+  @UI: {
+    lineItem:       [ { position: 40, importance: #MEDIUM } ],
+    selectionField: [ { position: 40 } ]
+  }
+  account_type;
+
+  @UI: {
+    lineItem:       [ { position: 50, importance: #MEDIUM } ],
+    selectionField: [ { position: 50 } ]
+  }
+  branch_id;
+
+  @UI: {
+    lineItem:       [ { position: 60, importance: #HIGH } ],
+    selectionField: [ { position: 60 } ]
+  }
+  txn_type;
+
+  @UI.lineItem: [ { position: 70, importance: #HIGH } ]
+  amount;
+
+  @UI: {
+    lineItem:       [ { position: 80, importance: #MEDIUM } ],
+    selectionField: [ { position: 70 } ]
+  }
+  txn_date;
+
+  @UI.lineItem: [ { position: 90, importance: #MEDIUM } ]
+  txn_time;
+}
