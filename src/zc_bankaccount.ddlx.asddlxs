@@ -20,6 +20,12 @@ annotate entity ZC_BANKACCOUNT with
     }
   ]
 
+  @UI.identification: [
+    { type: #FOR_ACTION, dataAction: 'deposit', label: 'Deposit' },
+    { type: #FOR_ACTION, dataAction: 'withdraw', label: 'Withdraw' },
+    { type: #FOR_ACTION, dataAction: 'closeAccount', label: 'Close Account' }
+  ]
+
   @UI: {
     lineItem:       [ { position: 10, importance: #HIGH } ],
     identification: [ { position: 10 } ],

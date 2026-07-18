@@ -1,0 +1,25 @@
+@Metadata.layer: #CORE
+
+annotate entity ZC_LOWBALANCEACCOUNTS with
+{
+  @UI.lineItem: [ { position: 10, importance: #HIGH } ]
+  account_id;
+
+  @UI.lineItem: [ { position: 20, importance: #HIGH } ]
+  customer_id;
+
+  @UI.lineItem: [ { position: 30, importance: #HIGH } ]
+  account_type;
+
+  @UI.lineItem: [ { position: 40, importance: #MEDIUM } ]
+  branch_id;
+
+  @UI.lineItem: [ { position: 50, importance: #HIGH } ]
+  balance;
+
+  @UI.lineItem: [ { position: 60, importance: #MEDIUM } ]
+  min_balance;
+
+  @UI.lineItem: [ { position: 70, importance: #MEDIUM } ]
+  status;
+}

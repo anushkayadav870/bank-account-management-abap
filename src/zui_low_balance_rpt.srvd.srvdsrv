@@ -1,0 +1,4 @@
+@EndUserText.label: 'Low Balance Accounts Report'
+define service ZUI_LOW_BALANCE_RPT {
+  expose ZC_LOWBALANCEACCOUNTS as LowBalanceAccounts;
+}

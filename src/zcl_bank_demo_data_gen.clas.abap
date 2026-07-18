@@ -41,11 +41,11 @@ CLASS zcl_bank_demo_data_gen IMPLEMENTATION.
       ( client = sy-mandt account_id = 'ACC000002' customer_id = 'CUST0002' account_type = 'CUR' branch_id = 'BR002' balance = '2000.00' status = 'A' open_date = cl_abap_context_info=>get_system_date( ) )
     ) ).
 
-    " 5. Sample Transactions
+   " 5. Sample Transactions
     DELETE FROM zbank_txn.
     INSERT zbank_txn FROM TABLE @( VALUE #(
-      ( client = sy-mandt transaction_id = 'TXN0000001' account_id = 'ACC000001' txn_type = 'DEPOSIT'  amount = '5000.00' txn_date = cl_abap_context_info=>get_system_date( ) txn_time = cl_abap_context_info=>get_system_time( ) )
-      ( client = sy-mandt transaction_id = 'TXN0000002' account_id = 'ACC000002' txn_type = 'DEPOSIT'  amount = '2000.00' txn_date = cl_abap_context_info=>get_system_date( ) txn_time = cl_abap_context_info=>get_system_time( ) )
+      ( client = sy-mandt transaction_id = '0000000001' account_id = 'ACC000001' txn_type = 'DEPOSIT'  amount = '5000.00' txn_date = cl_abap_context_info=>get_system_date( ) txn_time = cl_abap_context_info=>get_system_time( ) )
+      ( client = sy-mandt transaction_id = '0000000002' account_id = 'ACC000002' txn_type = 'DEPOSIT'  amount = '2000.00' txn_date = cl_abap_context_info=>get_system_date( ) txn_time = cl_abap_context_info=>get_system_time( ) )
     ) ).
 
     out->write( 'Demo data created successfully: 3 branches, 2 account types, 2 customers, 2 accounts, 2 transactions.' ).
