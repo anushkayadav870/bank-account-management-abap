@@ -12,8 +12,9 @@ define behavior for ZC_BANKACCOUNT alias Account
   use action deposit;
   use action withdraw;
   use action closeAccount;
+  use action transfer;
 
-  use association _Transaction { create; }
+  use association _Transaction { create; with draft; }
 
   use action Edit;
   use action Activate;
@@ -27,5 +28,5 @@ define behavior for ZC_BANKTRANSACTION alias Transaction
   use update;
   use delete;
 
-  use association _Account;
+  use association _Account { with draft; }
 }
