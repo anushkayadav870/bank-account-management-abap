@@ -91,6 +91,8 @@ CLASS lhc_Account DEFINITION INHERITING FROM cl_abap_behavior_handler.
       IMPORTING keys FOR Account~checkMinBalance.
     METHODS transfer FOR MODIFY
       IMPORTING keys FOR ACTION Account~transfer RESULT result.
+    METHODS applyInterest FOR MODIFY
+      IMPORTING keys FOR ACTION Account~applyInterest RESULT result.
 
 ENDCLASS.
 
@@ -278,7 +280,7 @@ CLASS lhc_Account IMPLEMENTATION.
     ENDLOOP.
   ENDMETHOD.
 
- METHOD transfer.
+  METHOD transfer.
     DATA txn_create_source TYPE TABLE FOR CREATE ZI_BANKACCOUNT\_Transaction.
     DATA txn_create_target TYPE TABLE FOR CREATE ZI_BANKACCOUNT\_Transaction.
     DATA(lv_next_id) = 1.
@@ -338,5 +340,60 @@ CLASS lhc_Account IMPLEMENTATION.
     result = VALUE #( FOR acc IN result_accounts ( %tky = acc-%tky %param = acc ) ).
   ENDMETHOD.
 
-ENDCLASS.
+  METHOD applyInterest.
+    READ ENTITIES OF ZI_BANKACCOUNT IN LOCAL MODE
+      ENTITY Account
+      FIELDS ( balance account_type )
+      WITH CORRESPONDING #( keys )
+      RESULT DATA(accounts).
 
+    DATA txn_create TYPE TABLE FOR CREATE ZI_BANKACCOUNT\_Transaction.
+    DATA(lv_next_id) = 1.
+
+    SELECT SINGLE MAX( transaction_id ) FROM zbank_txn INTO @DATA(lv_max_id).
+    IF lv_max_id IS NOT INITIAL.
+      lv_next_id = lv_max_id + 1.
+    ENDIF.
+
+    LOOP AT accounts INTO DATA(account).
+      SELECT SINGLE interest_rate FROM zbank_accttype
+        WHERE account_type = @account-account_type
+        INTO @DATA(lv_rate).
+
+      IF sy-subrc = 0 AND lv_rate > 0.
+        DATA(lv_interest) = account-balance * lv_rate / 100.
+
+        IF lv_interest > 0.
+          APPEND VALUE #(
+            %tky    = account-%tky
+            %target = VALUE #( (
+              %cid        = 'INT1'
+              transaction_id = |{ lv_next_id WIDTH = 10 ALIGN = RIGHT PAD = '0' }|
+              txn_type    = 'DEPOSIT'
+              amount      = lv_interest
+              txn_date    = cl_abap_context_info=>get_system_date( )
+              txn_time    = cl_abap_context_info=>get_system_time( )
+            ) )
+          ) TO txn_create.
+          lv_next_id = lv_next_id + 1.
+        ENDIF.
+      ENDIF.
+    ENDLOOP.
+
+    IF txn_create IS NOT INITIAL.
+      MODIFY ENTITIES OF ZI_BANKACCOUNT IN LOCAL MODE
+        ENTITY Account
+          CREATE BY \_Transaction
+          FIELDS ( transaction_id txn_type amount txn_date txn_time )
+          WITH txn_create.
+    ENDIF.
+
+    READ ENTITIES OF ZI_BANKACCOUNT IN LOCAL MODE
+      ENTITY Account
+      ALL FIELDS WITH CORRESPONDING #( keys )
+      RESULT DATA(result_accounts).
+
+    result = VALUE #( FOR acc IN result_accounts ( %tky = acc-%tky %param = acc ) ).
+  ENDMETHOD.
+
+ENDCLASS.

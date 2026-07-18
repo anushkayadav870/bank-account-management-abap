@@ -4,5 +4,6 @@ define view entity ZI_BANKACCTTYPE as select from zbank_accttype
 {
   key account_type,
       description,
-      min_balance
+      min_balance,
+      interest_rate
 }

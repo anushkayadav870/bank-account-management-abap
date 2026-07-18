@@ -23,6 +23,7 @@ authorization master ( global )
   action withdraw parameter ZI_BANKACCOUNT_WITHDRAW result [1] $self;
   action closeAccount result [1] $self;
   action transfer parameter ZI_BANKACCOUNT_TRANSFER result [1] $self;
+  action applyInterest result [1] $self;
 
   determination setAccountDefaults on modify { create; }
 

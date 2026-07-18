@@ -13,6 +13,7 @@ define behavior for ZC_BANKACCOUNT alias Account
   use action withdraw;
   use action closeAccount;
   use action transfer;
+  use action applyInterest;
 
   use association _Transaction { create; with draft; }
 

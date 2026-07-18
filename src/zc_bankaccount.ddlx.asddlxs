@@ -27,7 +27,8 @@ annotate entity ZC_BANKACCOUNT with
       { type: #FOR_ACTION, dataAction: 'deposit', label: 'Deposit' },
       { type: #FOR_ACTION, dataAction: 'withdraw', label: 'Withdraw' },
       { type: #FOR_ACTION, dataAction: 'closeAccount', label: 'Close Account' },
-      { type: #FOR_ACTION, dataAction: 'transfer', label: 'Transfer' }
+      { type: #FOR_ACTION, dataAction: 'transfer', label: 'Transfer' },
+      { type: #FOR_ACTION, dataAction: 'applyInterest', label: 'Apply Interest' }
     ],
     selectionField: [ { position: 10 } ]
   }

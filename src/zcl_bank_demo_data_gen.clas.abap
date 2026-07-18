@@ -23,8 +23,8 @@ CLASS zcl_bank_demo_data_gen IMPLEMENTATION.
     " 2. Account Types
     DELETE FROM zbank_accttype.
     INSERT zbank_accttype FROM TABLE @( VALUE #(
-      ( client = sy-mandt account_type = 'SAV'  description = 'Savings Account' min_balance = '1000.00' )
-      ( client = sy-mandt account_type = 'CUR'  description = 'Current Account' min_balance = '0.00' )
+      ( client = sy-mandt account_type = 'SAV'  description = 'Savings Account' min_balance = '1000.00' interest_rate = '4.50' )
+      ( client = sy-mandt account_type = 'CUR'  description = 'Current Account' min_balance = '0.00'    interest_rate = '0.00' )
     ) ).
 
     " 3. Customers
