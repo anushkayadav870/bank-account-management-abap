@@ -1,6 +1,8 @@
-@AccessControl.authorizationCheck: #NOT_REQUIRED
 @EndUserText.label: 'Bank Customer'
-define root view entity ZI_BANKCUST as select from zbank_cust
+@AccessControl.authorizationCheck: #NOT_REQUIRED
+@Metadata.allowExtensions: true
+define root view entity ZC_BANKCUST
+  as projection on ZI_BANKCUST as Customer
 {
   key customer_id,
       first_name,

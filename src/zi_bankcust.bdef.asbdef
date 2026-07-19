@@ -1,0 +1,24 @@
+managed implementation in class zbp_i_bankcust unique;
+strict(2);
+with draft;
+
+define behavior for ZI_BANKCUST alias Customer
+persistent table zbank_cust
+draft table zbank_cust_d
+etag master local_last_changed_at
+lock master total etag last_changed_at
+authorization master ( global )
+{
+  field ( readonly : update ) customer_id;
+  field ( readonly ) created_by, created_at, last_changed_by, last_changed_at, local_last_changed_at;
+
+  create;
+  update;
+  delete;
+
+  draft action Edit;
+  draft action Activate optimized;
+  draft action Discard;
+  draft action Resume;
+  draft determine action Prepare;
+}

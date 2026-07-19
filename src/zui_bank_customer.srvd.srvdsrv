@@ -1,0 +1,4 @@
+@EndUserText.label: 'Bank Customer Management Service'
+define service ZUI_BANK_CUSTOMER {
+  expose ZC_BANKCUST as Customer;
+}
