@@ -8,8 +8,9 @@ draft table zbank_acct_d
 etag master local_last_changed_at
 lock master total etag last_changed_at
 authorization master ( global )
+early numbering
 {
-  field ( readonly : update ) account_id;
+  field ( readonly ) account_id;
   field ( readonly ) balance, status, open_date;
   field ( readonly ) created_by, created_at, last_changed_by, last_changed_at, local_last_changed_at;
 
